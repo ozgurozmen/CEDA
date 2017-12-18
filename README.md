@@ -16,5 +16,7 @@ After installing the dependencies, go to CEDA folder and make. Then, under CEDA/
 
 Please check the licenses for the dependencies before using this code.
 
+Special thanks to Adam Brockett for providing RSA code in GMP.
+
 
 
