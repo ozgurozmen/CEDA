@@ -307,7 +307,7 @@ int main()
 		mpz_invert(Vall[i], Vall[i], kp.n);
 	}
 
-	unsigned char hashedM[32];
+	unsigned char hashedM[64];
 	unsigned char signatureHash[32];
 	unsigned char signatureHashVer[32];
 	unsigned char r[32];
@@ -322,7 +322,7 @@ int main()
 	for (ii = 0; ii < 100000; ++ii) {
 		mpz_set_ui(alpha,1);
 		start = clock();
-		blake2b(hashedM, message, NULL, 32,32,0);
+		blake2b(hashedM, message, NULL, 64,32,0);
 		blake2b(r, hashedM, z, 32,32,32);
 		mpz_import(rBig,sizeof(r),1,sizeof(r[0]),0,0, r);
 		block_encrypt(R, rBig, kp);
@@ -333,7 +333,7 @@ int main()
 
 		blake2b(signatureHash, compare, NULL, 32, sizeof(compare),0);
 
-		for (unsigned i = 0; i < 16; ++i) {
+		for (unsigned i = 0; i < 26; ++i) {
 			hash[0] = hashedM[2*i];
 			hash[1] = floor(hashedM[2*i+1]/64);
 			//printf("hash = %d", hash[0]);
@@ -355,9 +355,9 @@ int main()
 		//=====================VERIFY===========================
 	    mpz_set_ui(vPrime,1);
 		start2 = clock();
-		blake2b(hashedM, message, NULL, 32,32,0);
+		blake2b(hashedM, message, NULL, 64,32,0);
 
-		for (unsigned i = 0; i < 16; ++i) {
+		for (unsigned i = 0; i < 26; ++i) {
 			place = hashedM[2*i] + (floor(hashedM[2*i+1]/64) * 256);
 			//printf("place = %d\n", place);
 			mpz_mul(vPrime, Vall[place], vPrime);
