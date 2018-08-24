@@ -301,7 +301,7 @@ int main()
 		else
 			hash[0] = i;
 		blake2b(tempor, hash, z, 16, 2, 32);
-		mpz_import(temp,sizeof(tempor),1,sizeof(tempor[0]),0,0, tempor);
+		mpz_import(temp,16,1,sizeof(tempor[0]),0,0, tempor);
 		mpz_init(Vall[i]);
 		block_encrypt(Vall[i],temp,kp);
 		mpz_invert(Vall[i], Vall[i], kp.n);
@@ -324,7 +324,7 @@ int main()
 		start = clock();
 		blake2b(hashedM, message, NULL, 64,32,0);
 		blake2b(r, hashedM, z, 32,32,32);
-		mpz_import(rBig,sizeof(r),1,sizeof(r[0]),0,0, r);
+		mpz_import(rBig,32,1,sizeof(r[0]),0,0, r);
 		block_encrypt(R, rBig, kp);
 
 		int off = (BLOCK_SIZE - (mpz_sizeinbase(R, 2) + 8 - 1)/8);
@@ -340,7 +340,7 @@ int main()
 			//printf("and %d\n", hash[1]);
 			//hashS = clock();
 			blake2b(s, hash, z, 16, 2, 32);
-			mpz_import(sBig,sizeof(s),1,sizeof(s[0]),0,0, s);
+			mpz_import(sBig,16,1,sizeof(s[0]),0,0, s);
 			//hashE = clock();
 			//timeBlake = timeBlake + (double)(hashE-hashS);
 			mpz_mul(alpha,sBig,alpha);
